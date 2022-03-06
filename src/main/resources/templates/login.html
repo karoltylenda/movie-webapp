@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bm/jq-3.6.0/jszip-2.5.0/dt-1.11.4/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/datatables.min.css"/>
+
+    <title>Movie-WEBAPP</title>
+    <style>
+        html {
+            background-image: url("/images/pexels-skitterphoto-390089.jpg");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<section class="section is-flex is-justify-content-center is-align-items-center" style="height: 100vh">
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <form th:action="@{/login}" method="post" class="container" id="login-form">
+                    <div class="field">
+                        <div class="control has-icons-right">
+                            <input class="input" type="text" placeholder="Username" name="username">
+                            <span class="icon is-small is-right">
+                                                                <ion-icon name="person-outline"></ion-icon>
+                                                            </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control has-icons-right">
+                            <input class="input" type="password" placeholder="Password" name="password">
+                            <span class="icon is-small is-right">
+                                                                <ion-icon name="lock-closed-outline"></ion-icon>
+                                                            </span>
+                        </div>
+                    </div>
+                    <div class="field" style="text-align: end">
+                        <a class="is-size-7 has-text-black"><strong>Forgot password?</strong></a>
+                    </div>
+                    <div class="field" style="margin-top: 48px;">
+                        <p class="control has-width-100">
+                            <button class="button is-light is-success has-width-100" type="submit">
+                                Get Started
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
