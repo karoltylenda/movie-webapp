@@ -17,8 +17,138 @@
     <script src="https://kit.fontawesome.com/37ef35aa2e.js" crossorigin="anonymous"></script>
 
     <title>Movie-WEBAPP</title>
+    <style>
+        html {
+            background-color: hsl(219, 70%, 96%);
+        }
+    </style>
 </head>
 <body>
+    <section class="section">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://bulma.io">
+                    <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+        </nav>
+    </section>
+
+    <!-- USERS TABLE -->
+    <section class="section">
+        <div class="container">
+            <table class="table is-fullwidth is-striped" id="usersTable" style="white-space: nowrap">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>E-mail</th>
+                    <th>Role</th>
+                    <th>Api key</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user:${users}">
+                    <td th:text="${user.getId()}"></td>
+                    <td th:text="${user.getFirstName()}"></td>
+                    <td th:text="${user.getLastName()}"></td>
+                    <td th:text="${user.getUsername()}"></td>
+                    <td th:text="${user.getRole()}"></td>
+                    <td th:text="${user.getOmdbApiKey()}"></td>
+                    <td class="is-flex is-justify-content-space-around">
+                        <a href="#" class="has-text-primary"><div><i class="fa-solid fa-pen-to-square"></i></div></a>
+                        <a href="#" class="has-text-info"><div><i class="fa-solid fa-key"></i></div></a>
+                        <a href="#" class="has-text-danger"><div><i class="fa-solid fa-trash-can"></i></div></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- END USERS TABLE -->
+
+    <section class="section">
+        <div class="container">
+            <button class="button is-primary js-modal-trigger" data-target="addUserModal">Add user</button>
+        </div>
+    </section>
+
+    <!-- MODAL FOR NEW USER -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Add new user: </p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <form action="#" th:action="@{/addUser}" method="post" autocomplete="off">
+                <section class="modal-card-body">
+                    <div class="field is-flex is-justify-content-space-between">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="First name" name="firstName">
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-align-left"></i>
+                    </span>
+                        </p>
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="Last name" name="lastName">
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-align-left"></i>
+                    </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="email" placeholder="Email" name="username" autocomplete="off" value="">
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                        </p>
+                    </div>
+                    <div class="field has-background-warning-light">
+                        <div class="select has-width-100">
+                            <select class="has-width-100" name="role">
+                                <option disabled selected class="has-text-grey-lighter">Select role</option>
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="USER">USER</option>
+                                <option value="CUSTOMER">CUSTOMER</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" type="password" placeholder="Password" autocomplete="new-password">
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                            <input class="input" type="password" placeholder="Confirm password" name="password">
+                            <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                        </p>
+                    </div>
+                </section>
+                <section class="modal-card-foot is-justify-content-end">
+                    <button class="button is-success" type="submit">Save changes</button>
+                    <button class="button" type="reset">Cancel</button>
+                </section>
+            </form>
+        </div>
+    </div>
+    <!-- END MODAL FOR NEW USER -->
 
 </body>
+<script th:src="@{/js/script.js}"></script>
+<script src="/static/js/script.js"></script>
 </html>
