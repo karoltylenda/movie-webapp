@@ -1,0 +1,23 @@
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.1px);
+    -webkit-backdrop-filter: blur(3.1px);
+}
+
+.has-width-100 {
+    width: 100%!important;
+}
+
+.has-height-100 {
+    height: 100vh!important;
+}
+
+#mainMenu div a div {
+    transition: 0.3s;
+}
+#mainMenu div a div:hover {
+    transform: scale(1.2);
+    color: hsl(217, 71%, 45%);
+}

@@ -33,11 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/register", "/css/**").permitAll()
+                .antMatchers("/register", "/css/**", "/images/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
 //                .antMatchers("/index").hasAuthority("ADMIN")
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/index", true).permitAll()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll()
                 .and()
                 .logout().invalidateHttpSession(true).permitAll();
     }
