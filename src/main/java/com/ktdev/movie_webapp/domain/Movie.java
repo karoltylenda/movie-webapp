@@ -1,5 +1,7 @@
 package com.ktdev.movie_webapp.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class Movie {
     private Integer year;
 
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate released;
 
     @Column
@@ -60,6 +63,7 @@ public class Movie {
     private String imdbId;
 
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String type;
 
     @Column

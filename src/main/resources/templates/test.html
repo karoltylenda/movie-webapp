@@ -3,81 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <title>Title</title>
 </head>
 <body>
-<div class="container">
-    <div class="field">
-        <input class="input is-danger" type="text" id="password" onkeyup="showMessage('info')">
-        <input class="input is-danger"  type="text" id="confirmPassword" onkeyup="showMessage('info')">
-        <span>INFO:</span><span id="info" class="has-text-danger">Password field cannot be empty</span>
+    <div class="container">
+        <button class="button is-info" onclick="parseDate()">TEST</button>
     </div>
-    <div class="field">
-        <input class="input is-danger"  type="text" id="resetPassword" onkeyup="showMessage('resetInfo')">
-        <input  class="input is-danger" type="text" id="resetConfirmPassword" onkeyup="showMessage('resetInfo')">
-        <span>INFO</span><span id="resetInfo" class="has-text-danger">Password field cannot be empty</span>
-    </div>
-</div>
 
 </body>
 <script>
-    function showMessage(value){
-
-        let password;
-        let confirmPassword;
-        let message = document.getElementById(value);
-
-        switch (value) {
-            case 'info':
-                password = document.getElementById('password');
-                confirmPassword = document.getElementById('confirmPassword');
-                break;
-            case 'resetInfo':
-                password = document.getElementById('resetPassword');
-                confirmPassword = document.getElementById('resetConfirmPassword');
-                break;
-            default: break;
-        }
-        if (areFieldsEmpty(password, confirmPassword)){
-            message.innerText = 'Password field cannot be empty';
-            message.classList.replace('has-text-success', 'has-text-danger');
-            setInputPasswordClass(password, confirmPassword, 'is-danger')
-        } else if (isPasswordMatches(password, confirmPassword)){
-            message.innerText = 'Password match';
-            message.classList.replace('has-text-danger', 'has-text-success');
-            setInputPasswordClass(password, confirmPassword, 'is-success');
-        } else {
-            message.innerText = 'Password doesn\'t match'
-            message.classList.replace('has-text-success', 'has-text-danger');
-            setInputPasswordClass(password, confirmPassword, 'is-danger');
-        }
+    function dateParser(date = ''){
+        const dateArray = date.split(' ');
+        return dateArray[2]+'-'+getMonthNumber(dateArray[1])+'-'+dateArray[0];
     }
 
-    function areFieldsEmpty(password, confirmPassword){
-        if (password.value.length === 0 || confirmPassword.value.length === 0){
-            return true;
-        } else return false;
-    }
-
-    function isPasswordMatches(password, confirmPassword){
-        if (password.value === confirmPassword.value){
-            return true;
-        } else return false;
-    }
-
-    function setInputPasswordClass(password, confirmPassword, className){
-        switch (className){
-            case 'is-danger':
-                password.classList.replace('is-success', className);
-                confirmPassword.classList.replace('is-success', className);
+    function getMonthNumber(month = ''){
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthsNo = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        for (let i = 0; i < months.length; i++) {
+            if (month === months[i]){
+                month = monthsNo[i];
                 break;
-            case 'is-success':
-                password.classList.replace('is-danger', className);
-                confirmPassword.classList.replace('is-danger', className);
-                break;
-            default:
-                break;
+            }
         }
+        return month;
     }
 </script>
 </html>

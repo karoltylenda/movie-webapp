@@ -4,6 +4,7 @@ import com.ktdev.movie_webapp.domain.User;
 import com.ktdev.movie_webapp.model.UserDTO;
 import com.ktdev.movie_webapp.repos.UserRepository;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
     public UserService(final UserRepository userRepository) {
         this.userRepository = userRepository;

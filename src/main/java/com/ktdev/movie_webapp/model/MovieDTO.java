@@ -2,6 +2,8 @@ package com.ktdev.movie_webapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +22,7 @@ public class MovieDTO {
 
     private Integer year;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate released;
 
     @Size(max = 255)
@@ -50,6 +53,7 @@ public class MovieDTO {
     @Size(max = 255)
     private String type;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dvd;
 
     @Size(max = 255)

@@ -2,6 +2,8 @@ package com.ktdev.movie_webapp.rest;
 
 import com.ktdev.movie_webapp.model.UserDTO;
 import com.ktdev.movie_webapp.service.UserService;
+
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -55,4 +57,8 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/principal")
+    public Principal retrievePrincipal(Principal principal){
+        return principal;
+    }
 }
