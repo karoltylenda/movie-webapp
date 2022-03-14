@@ -84,4 +84,16 @@ public class UserDTO {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + "HIDDEN" + '\'' +
+                ", omdbApiKey='" + omdbApiKey + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }
