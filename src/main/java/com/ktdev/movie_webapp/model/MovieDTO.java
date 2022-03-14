@@ -251,4 +251,31 @@ public class MovieDTO {
         this.actors = actors;
     }
 
+    @Override
+    public String toString() {
+        return "MovieDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", year='" + year + '\'' +
+                ", released=" + released +
+                ", runtime='" + runtime + '\'' +
+                ", plot='" + plot + '\'' +
+                ", language='" + language + '\'' +
+                ", country='" + country + '\'' +
+                ", awards='" + awards + '\'' +
+                ", poster='" + poster + '\'' +
+                ", imdbRating='" + imdbRating + '\'' +
+                ", imdbVotes='" + imdbVotes + '\'' +
+                ", imdbId='" + imdbId + '\'' +
+                ", type='" + type + '\'' +
+                ", dvd=" + dvd +
+                ", boxOffice='" + boxOffice + '\'' +
+                ", website='" + website + '\'' +
+                ", price=" + price +
+                ", genreTypes=" + genreTypes +
+                ", directors=" + directors +
+                ", writers=" + writers +
+                ", actors=" + actors +
+                '}';
+    }
 }

@@ -65,4 +65,14 @@ public class PaymentDTO {
         this.customer = customer;
     }
 
+    @Override
+    public String toString() {
+        return "PaymentDTO{" +
+                "id=" + id +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", rental=" + rental +
+                ", customer=" + customer +
+                '}';
+    }
 }

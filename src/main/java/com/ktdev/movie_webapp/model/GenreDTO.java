@@ -28,4 +28,11 @@ public class GenreDTO {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "GenreDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

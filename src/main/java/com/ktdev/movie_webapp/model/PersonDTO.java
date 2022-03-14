@@ -40,4 +40,12 @@ public class PersonDTO {
         this.lastName = lastName;
     }
 
+    @Override
+    public String toString() {
+        return "PersonDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

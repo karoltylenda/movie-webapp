@@ -38,4 +38,12 @@ public class PostalDTO {
         this.city = city;
     }
 
+    @Override
+    public String toString() {
+        return "PostalDTO{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", city=" + city +
+                '}';
+    }
 }

@@ -67,4 +67,15 @@ public class RentalDTO {
         this.customer = customer;
     }
 
+    @Override
+    public String toString() {
+        return "RentalDTO{" +
+                "id=" + id +
+                ", rentalDate=" + rentalDate +
+                ", returnDate=" + returnDate +
+                ", isPaid=" + isPaid +
+                ", movie=" + movie +
+                ", customer=" + customer +
+                '}';
+    }
 }

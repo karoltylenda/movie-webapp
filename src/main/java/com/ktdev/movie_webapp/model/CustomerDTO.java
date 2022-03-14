@@ -74,4 +74,15 @@ public class CustomerDTO {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", address=" + address +
+                '}';
+    }
 }
