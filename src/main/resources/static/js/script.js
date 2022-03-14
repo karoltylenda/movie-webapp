@@ -59,6 +59,21 @@ $(document).ready( function () {
             }
         }
     });
+
+    $('#moviesTable').DataTable({
+        language: {
+            paginate: {
+                previous: '<',
+                next: '>'
+            }
+        },
+        aria: {
+            paginate: {
+                previous: 'Previous',
+                next: 'Next'
+            }
+        }
+    });
 } );
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -148,3 +163,22 @@ function setInputPasswordClass(password, confirmPassword, className){
     }
 }
 // <<< END OF CHECK PASSWORDS MATCH
+
+//DATE PARSER
+function dateParser(date = ''){
+    const dateArray = date.split(' ');
+    return dateArray[2]+'-'+getMonthNumber(dateArray[1])+'-'+dateArray[0];
+}
+
+function getMonthNumber(month = ''){
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthsNo = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    for (let i = 0; i < months.length; i++) {
+        if (month === months[i]){
+            month = monthsNo[i];
+            break;
+        }
+    }
+    return month;
+}
+//END OF DATE PARSER

@@ -49,6 +49,12 @@ public class GenreService {
         genreRepository.deleteById(id);
     }
 
+    public GenreDTO getByName(String name){
+        return genreRepository.getByName(name)
+                .map(genre -> mapToDTO(genre, new GenreDTO()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
     private GenreDTO mapToDTO(final Genre genre, final GenreDTO genreDTO) {
         genreDTO.setId(genre.getId());
         genreDTO.setName(genre.getName());

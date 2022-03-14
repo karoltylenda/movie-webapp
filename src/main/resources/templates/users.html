@@ -51,7 +51,7 @@
                                 <p class="content">This action cannot be undone and you will be unable to recover any data.</p>
                             </section>
                             <footer class="modal-card-foot is-justify-content-end">
-                                <a th:href="@{'/users/delete/'+${user.getId()}}" class="button is-danger">Save changes</a>
+                                <a th:href="@{'/users/delete/'+${user.getId()}}" class="button is-danger">Delete</a>
                                 <button class="button">Cancel</button>
                             </footer>
                         </div>
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="field">
                                         <span><strong>Info:</strong>&nbsp;&nbsp;</span>
-                                        <span th:id="'resetInfo'+${user.getId()}" class="has-text-danger">Password field cannot be empty'</span>
+                                        <span th:id="'resetInfo'+${user.getId()}" class="has-text-danger">Password field cannot be empty</span>
                                     </div>
                                 </section>
                                 <section class="modal-card-foot is-justify-content-end">
@@ -114,7 +114,7 @@
                 <p class="modal-card-title">Add new user: </p>
                 <button class="delete" aria-label="close"></button>
             </header>
-            <form action="#" th:action="@{/addUser}" method="post" autocomplete="off">
+            <form action="#" th:action="@{/users/addUser}" method="post" autocomplete="off">
                 <section class="modal-card-body">
                     <div class="field is-flex is-justify-content-space-between">
                         <p class="control has-icons-left has-icons-right">
@@ -133,8 +133,8 @@
                         </p>
                     </div>
                     <div class="field has-background-warning-light">
-                        <div class="select has-width-100">
-                            <select class="has-width-100" name="role">
+                        <div class="select is-fullwidth">
+                            <select class="is-fullwidth" name="role">
                                 <option disabled selected class="has-text-grey-lighter">Select role</option>
                                 <option value="ADMIN">ADMIN</option>
                                 <option value="USER">USER</option>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="field">
                         <span><strong>Info:</strong>&nbsp;&nbsp;</span>
-                        <span id="info" class="has-text-danger">Password field cannot be empty'</span>
+                        <span id="info" class="has-text-danger">Password field cannot be empty</span>
                     </div>
                 </section>
                 <section class="modal-card-foot is-justify-content-end">

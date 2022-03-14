@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header.html"></th:block>
+</head>
+<body>
+<section class="section">
+    <th:block th:replace="fragments/navbar.html"></th:block>
+</section>
+
+<section class="section" id="addMovieSection">
+    <div class="container">
+        <form action="#" th:action="@{/movies/addMovie}" method="post" autocomplete="off">
+            <section class="section">
+                <div class="field">
+                    <label class="label">Title: </label>
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Title" name="title">
+                        <span class="icon is-small is-left"><i class="fas fa-file-signature"></i></span>
+                    </p>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Release date: </label>
+                        <p class="control has-icons-right has-icons-left">
+                            <input class="input" type="date" name="released">
+                            <span class="icon is-small is-left"><i class="fas fa-calendar-alt"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">Year: </label>
+                        <p class="control has-icons-right has-icons-left">
+                            <input class="input" type="text" placeholder="Year" name="year">
+                            <span class="icon is-small is-left"><i class="fas fa-calendar-alt"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Runtime: </label>
+                            <p class="control has-icons-right has-icons-left">
+                                <input class="input" type="text" placeholder="Runtime" name="runtime">
+                                <span class="icon is-small is-left"><i class="fas fa-clock"></i></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Type: </label>
+                            <div class="select is-fullwidth">
+                                <select name="type">
+                                    <option value="series">Series</option>
+                                    <option value="movie">Movie</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">IMDB ID: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="IMDB ID" name="imdbID">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-square-poll-horizontal"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">IMDB Votes: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="IMDB Votes" name="imdbVotes">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-square-poll-horizontal"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">IMDB Rating: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="IMDB Rating" name="imdbRating">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-star"></i></span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="columns" style="white-space: nowrap">
+                    <div class="column">
+                        <label class="label">Awards: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Awards" name="awards">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-award"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">Box-office: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Box-office" name="boxOffice">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-dollar-sign"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">DVD Release date: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="date" name="dvd">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-compact-disc"></i></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Languages: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Languages" name="language">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-language"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">Countries: </label>
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input" type="text" placeholder="Countries" name="countries">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-globe"></i></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Poster: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Poster" name="poster">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-image"></i></span>
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">Website: </label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Website" name="website">
+                            <span class="icon is-small is-left"><i class="fa-solid fa-language"></i></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column select is-multiple is-fullwidth">
+                        <label class="label">Genre: </label>
+                        <select class="is-fullwidth" name="genres" multiple>
+                            <option value="Horror">Horror</option>
+                            <option value="Sci-fi">Sci-fi</option>
+                            <option value="Comedy">Comedy</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Info: </label>
+                        <textarea class="textarea" name="plot"></textarea>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column id-flex is-justify-content-end is-align-items-end">
+                        <button class="button is-link" type="submit">Add movie</button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</section>
+
+</body>
+<script th:src="@{/js/script.js}"></script>
+<script src="/static/js/script.js"></script>
+</html>

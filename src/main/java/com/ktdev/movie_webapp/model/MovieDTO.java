@@ -20,7 +20,7 @@ public class MovieDTO {
     @Size(max = 255)
     private String title;
 
-    private Integer year;
+    private String year;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate released;
@@ -91,11 +91,11 @@ public class MovieDTO {
         this.title = title;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(final Integer year) {
+    public void setYear(final String year) {
         this.year = year;
     }
 

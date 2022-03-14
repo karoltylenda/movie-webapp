@@ -1,12 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <title>Title</title>
+    <th:block th:replace="fragments/header.html"></th:block>
 </head>
 <body>
+<section class="section">
+    <th:block th:replace="fragments/navbar.html"></th:block>
+</section>
+
+<section class="section">
+    <div class="container">
+        <table class="table is-striped is-fullwidth card" id="moviesTable" style="white-space: nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Release date</th>
+                    <th>Type</th>
+                    <th>Country</th>
+                    <th>IMDB ID</th>
+                    <th>Runtime</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="movie:${movies}">
+                    <td th:text="${movie.getId()}"></td>
+                    <td th:text="${movie.getTitle()}"></td>
+                    <td th:text="${movie.getReleased()}"></td>
+                    <td th:text="${movie.getType()}"></td>
+                    <td th:text="${movie.getCountry()}"></td>
+                    <td th:text="${movie.getImdbId()}"></td>
+                    <td th:text="${movie.getRuntime()}"></td>
+                    <td class="is-flex is-justify-content-space-around">
+                        <a href="#" class="has-text-primary"><div><i class="fa-solid fa-pen-to-square"></i></div></a>
+                        <a class="has-text-danger js-modal-trigger" data-target=""><div><i class="fa-solid fa-trash-can"></i></div></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
 <section class="section">
     <div class="container">
         <div class="field">
@@ -34,16 +69,7 @@
         </div>
     </div>
 </section>
-<section class="section">
-    <div class="container" id="movieContainer">
 
-    </div>
-</section>
-<div class="notification is-danger is-light" style="display: none" id="dangerNotification">
-    <button class="delete"></button>
-    Primar lorem ipsum dolor sit amet, consectetur
-    adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
-</div>
 </body>
 <script>
     function searchMovie(){
@@ -105,32 +131,15 @@
         return response.json();
     }
 
-    function dateParser(date = ''){
-        const dateArray = date.split(' ');
-        return dateArray[2]+'-'+getMonthNumber(dateArray[1])+'-'+dateArray[0];
-    }
-
-    function getMonthNumber(month = ''){
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const monthsNo = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-        for (let i = 0; i < months.length; i++) {
-            if (month === months[i]){
-                month = monthsNo[i];
-                break;
-            }
-        }
-        return month;
+    function setMovieField(data = ''){
+        if (data === undefined){
+            return null;
+        } else if (data === 'undefined--N/A'){
+            return null;
+        } else return data;
     }
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-            const $notification = $delete.parentNode;
 
-            $delete.addEventListener('click', () => {
-                $notification.parentNode.removeChild($notification);
-            });
-        });
-    });
-</script>
+<script th:src="@{/js/script.js}"></script>
+<script src="/static/js/script.js"></script>
 </html>

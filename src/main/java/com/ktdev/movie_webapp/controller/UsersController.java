@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
+@RequestMapping("/users")
 public class UsersController {
 
     private final UserService userService;
@@ -19,7 +21,7 @@ public class UsersController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public String users(Model model){
         model.addAttribute("users", userService.findAll());
         return "users";

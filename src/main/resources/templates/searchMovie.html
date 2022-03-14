@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header.html"></th:block>
+</head>
+<body>
+<section class="section">
+    <th:block th:replace="fragments/navbar.html"></th:block>
+</section>
+<section class="section">
+    <div class="container">
+        <p class="is-size-2 is-size-4-mobile">
+            Search movies in OMDB Database:
+        </p>
+        <div class="divider is-link"></div>
+    </div>
+</section>
+<section class="section" id="searchInOmdb">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <p class="control has-icons-left">
+                    <input class="input" type="text" id="searchOmdbInput">
+                    <span class="icon is-small is-left"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </p>
+            </div>
+            <div class="column is-one-fifth is-flex is-align-items-end">
+                <button class="button is-link is-fullwidth" type="button" id="searchOmdbButton">Search</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+<script th:src="@{/js/script.js}"></script>
+<script src="/static/js/script.js"></script>
+<script>
+
+</script>
+</html>

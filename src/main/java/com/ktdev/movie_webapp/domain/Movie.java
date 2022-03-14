@@ -29,7 +29,7 @@ public class Movie {
     private String title;
 
     @Column
-    private Integer year;
+    private String year;
 
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -129,11 +129,11 @@ public class Movie {
         this.title = title;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(final Integer year) {
+    public void setYear(final String year) {
         this.year = year;
     }
 
