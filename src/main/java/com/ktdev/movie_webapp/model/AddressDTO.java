@@ -60,4 +60,14 @@ public class AddressDTO {
         this.postal = postal;
     }
 
+    @Override
+    public String toString() {
+        return "AddressDTO{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", street2='" + street2 + '\'' +
+                ", info='" + info + '\'' +
+                ", postal=" + postal +
+                '}';
+    }
 }

@@ -64,7 +64,6 @@ public class MoviesController {
     public String searchInOmdb(Model model, Principal principal){
         String username = principal.getName();
         UserDTO userDTO = userService.getByUsername(username);
-        LOGGER.info(userDTO.toString());
         model.addAttribute("apikey", userDTO.getOmdbApiKey());
         return "searchMovie";
     }
