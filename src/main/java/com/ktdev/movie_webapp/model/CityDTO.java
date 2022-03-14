@@ -26,4 +26,11 @@ public class CityDTO {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "CityDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
