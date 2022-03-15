@@ -227,7 +227,7 @@
                         </p>
                     </header>
                     <div class="card-content">
-                        <form>
+                        <form th:action="@{/profile/update}" method="post">
                             <div class="field is-horizontal">
                                 <div class="field-label is-normal">
                                     <label class="label">First name</label>
@@ -261,7 +261,8 @@
                                 <div class="field-body">
                                     <div class="field">
                                         <div class="control">
-                                            <input type="email" class="input" name="username" th:value="${user.username}" required>
+                                            <input type="email" class="input" name="username" th:value="${user.username}" disabled>
+                                            <input type="text" name="id" th:value="${user.id}" hidden>
                                         </div>
                                         <p class="help">Required. Your email</p>
                                     </div>
@@ -378,7 +379,8 @@
                         </p>
                     </header>
                     <div class="card-content">
-                        <form>
+                        <form th:action="@{/profile/changePassword}" method="post">
+                            <input type="text" name="id" th:value="${user.id}" hidden>
                             <div class="field is-horizontal">
                                 <div class="field-label is-normal">
                                     <label class="label">Current password</label>
@@ -386,7 +388,7 @@
                                 <div class="field-body">
                                     <div class="field">
                                         <div class="control">
-                                            <input type="password" name="password_current" autocomplete="current-password" class="input" required>
+                                            <input type="password" name="currentPassword" autocomplete="current-password" class="input" required>
                                         </div>
                                         <p class="help">Required. Your current password</p></div>
                                 </div>
@@ -412,7 +414,7 @@
                                 <div class="field-body">
                                     <div class="field">
                                         <div class="control">
-                                            <input type="password" autocomplete="new-password" name="password_confirmation" class="input" required>
+                                            <input type="password" autocomplete="new-password" name="passwordConfirmation" class="input" required>
                                         </div>
                                         <p class="help">Required. New password one more time</p>
                                     </div>
