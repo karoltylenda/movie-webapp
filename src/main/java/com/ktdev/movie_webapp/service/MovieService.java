@@ -7,9 +7,16 @@ import com.ktdev.movie_webapp.model.MovieDTO;
 import com.ktdev.movie_webapp.repos.GenreRepository;
 import com.ktdev.movie_webapp.repos.MovieRepository;
 import com.ktdev.movie_webapp.repos.PersonRepository;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -58,6 +65,24 @@ public class MovieService {
 
     public void delete(final Long id) {
         movieRepository.deleteById(id);
+    }
+
+    public Page<MovieDTO> findPaginated(Pageable pageable){
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<MovieDTO> list;
+
+        if (findAll().size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, findAll().size());
+            list = findAll().subList(startItem, toIndex);
+        }
+
+        Page<MovieDTO> movieDTOPage = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), findAll().size());
+
+        return movieDTOPage;
     }
 
     private MovieDTO mapToDTO(final Movie movie, final MovieDTO movieDTO) {

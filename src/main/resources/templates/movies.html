@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <th:block th:replace="fragments/header.html"></th:block>
 </head>
@@ -64,7 +66,8 @@
                 <div class="level-item">
                     <ul>
                         <li>Admin</li>
-                        <li>Dashboard</li>
+                        <li>Movies</li>
+                        <li>All movies</li>
                     </ul>
                 </div>
             </div>
@@ -78,7 +81,7 @@
             <div class="level">
                 <div class="level-left">
                     <div class="level-item"><h1 class="title">
-                        Dashboard
+                        Movies
                     </h1></div>
                 </div>
                 <div class="level-right" style="display: none;">
@@ -91,10 +94,106 @@
 
     <!-- MAIN SECTION -->
     <section class="section is-main-section">
+        <div class="card has-table">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+                    Movies
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="b-table has-pagination">
+                    <div class="table-wrapper has-mobile-cards">
+                        <table class="table is-fullwidth is-striped is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Genre</th>
+                                    <th>Type</th>
+                                    <th>Runtime</th>
+                                    <th>Released</th>
+                                    <th>Country</th>
+                                    <th>IMDB ID</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="movie: ${movies}">
+                                    <td><small  th:text="${movie.id}"></small></td>
+                                    <td><strong th:text="${movie.title}"></strong></td>
+                                    <td>
+                                        <th:block th:each="genre: ${movie.genreTypes}">
+                                            <small>
+                                                <span th:text="${genresMap.get(genre.toString())}"></span>
+                                            </small>
+                                        </th:block>
+                                    </td>
+                                    <td><small th:text="${movie.type}"></small></td>
+                                    <td><small th:text="${movie.runtime}"></small></td>
+                                    <td><small th:text="${movie.released}"></small></td>
+                                    <td><small th:text="${movie.country}"></small></td>
+                                    <td><small th:text="${movie.imdbId}"></small></td>
+                                    <td class="is-actions-cell">
+                                        <div class="buttons is-right">
+                                            <button class="button is-small is-primary" type="button">
+                                                <span class="icon"><i class="mdi mdi-eye"></i></span>
+                                            </button>
+                                            <button class="button is-small is-danger jb-modal" th:data-target="'delete-modal-'+${movie.id}" type="button">
+                                                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                                            </button>
+                                        </div>
+                                    </td>
 
+                                    <div th:id="'delete-modal-'+${movie.id}" class="modal">
+                                        <div class="modal-background jb-modal-close"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head">
+                                                <p class="modal-card-title">Confirm action</p>
+                                                <button class="delete jb-modal-close" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                                <p>This will permanently delete <b th:text="${movie.title}"></b></p>
+                                            </section>
+                                            <footer class="modal-card-foot">
+                                                <button class="button jb-modal-close">Cancel</button>
+                                                <form th:action="@{/movies/delete/{id}(id=${movie.id})}">
+                                                    <button class="button is-danger jb-modal-close" type="submit">Delete</button>
+                                                </form>
+                                            </footer>
+                                        </div>
+                                        <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="notification">
+                            <div class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <div class="buttons has-addons">
+                                            <th:block th:each="pageNumber: ${pageNumbers}">
+                                                <a th:href="@{/movies(size=${movies.size}, page=${pageNumber})}"
+                                                    style="text-decoration: none">
+                                                    <button type="button" th:class="${pageNumber==movies.number + 1} ? 'button is-active' : 'button'" th:text="${pageNumber}"></button>
+                                                </a>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <small>Page <span th:text="${currentPage}"></span> of <span th:text="${pageNumbers.size()}"></span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- END OF MAIN SECTION -->
-
 
     <footer class="footer">
         <th:block th:replace="fragments/footer.html"></th:block>
