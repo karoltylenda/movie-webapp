@@ -4,11 +4,17 @@ import com.ktdev.movie_webapp.domain.Genre;
 import com.ktdev.movie_webapp.model.GenreDTO;
 import com.ktdev.movie_webapp.repos.GenreRepository;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,6 +35,24 @@ public class GenreService {
                 .stream()
                 .map(genre -> mapToDTO(genre, new GenreDTO()))
                 .collect(Collectors.toList());
+    }
+
+    public Page<GenreDTO> findPaginated(Pageable pageable){
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<GenreDTO> list;
+
+        if (findAll().size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, findAll().size());
+            list = findAll().subList(startItem, toIndex);
+        }
+
+        Page<GenreDTO> genreDTOPage = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), findAll().size());
+
+        return genreDTOPage;
     }
 
     public GenreDTO get(final Long id) {
