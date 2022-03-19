@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <th:block th:replace="fragments/header.html"></th:block>
+</head>
+<body>
+<div>
+    <nav id="navbar-main" class="navbar is-fixed-top">
+        <div class="navbar-brand">
+            <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+                <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+            </a>
+            <div class="navbar-item has-control">
+                <div class="control"><input placeholder="Search everywhere..." class="input"></div>
+            </div>
+        </div>
+        <div class="navbar-brand is-right">
+            <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+                <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+            </a>
+        </div>
+        <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+                    <a class="navbar-link is-arrowless">
+                        <div class="is-user-avatar">
+                            <img th:src="'https://avatars.dicebear.com/v2/initials/'+${loggedUser.firstName}+'-'+${loggedUser.lastName}+'.svg'" th:alt="${loggedUser.firstName}+' '+${loggedUser.lastName}">
+                        </div>
+                        <div class="is-user-name"><span th:text="${loggedUser.firstName}+' '+${loggedUser.lastName}"></span></div>
+                        <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a th:href="@{/profile}" class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-account"></i></span>
+                            <span>My Profile</span>
+                        </a>
+                        <a class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-settings"></i></span>
+                            <span>Settings</span>
+                        </a>
+                        <hr class="navbar-divider">
+                        <a th:href="@{/logout}" class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-logout"></i></span>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+                <a th:href="@{/logout}" title="Log out" class="navbar-item is-desktop-icon-only">
+                    <span class="icon"><i class="mdi mdi-logout"></i></span>
+                    <span>Log out</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ASIDE MENU -->
+    <th:block th:replace="fragments/aside.html"></th:block>
+    <!-- END OF ASIDE MENU -->
+
+    <!-- BREADCRUMB -->
+    <section class="section is-title-bar">
+        <div class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <ul>
+                        <li>Admin</li>
+                        <li>Genres</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF BREADCRUMB -->
+
+    <!-- HERO SECTION -->
+    <section class="hero is-hero-bar">
+        <div class="hero-body">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item"><h1 class="title">
+                        Genres
+                    </h1></div>
+                </div>
+                <div class="level-right" style="display: none;">
+                    <div class="level-item"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF HERO SECTION -->
+
+    <!-- MAIN SECTION -->
+    <section class="section is-main-section">
+        <div class="card has-table">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+                    Genres
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="b-table has-pagination">
+                    <div class="table-wrapper has-mobile-cards">
+                        <table class="table is-fullwidth is-striped is-hoverable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="genre: ${genres}">
+                                <td><small  th:text="${genre.id}"></small></td>
+                                <td><strong th:text="${genre.name}"></strong></td>
+                                <td class="is-actions-cell">
+                                    <div class="buttons is-right">
+                                        <a href="#">
+                                            <button class="button is-small is-primary" type="button">
+                                                <span class="icon"><i class="mdi mdi-eye"></i></span>
+                                            </button>
+                                        </a>
+                                        <button class="button is-small is-danger jb-modal" th:data-target="'delete-modal-'+${genre.id}" type="button">
+                                            <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                                        </button>
+                                    </div>
+                                </td>
+
+                                <div th:id="'delete-modal-'+${genre.id}" class="modal">
+                                    <div class="modal-background jb-modal-close"></div>
+                                    <div class="modal-card">
+                                        <header class="modal-card-head">
+                                            <p class="modal-card-title">Confirm action</p>
+                                            <button class="delete jb-modal-close" aria-label="close"></button>
+                                        </header>
+                                        <section class="modal-card-body">
+                                            <p>This will permanently delete <b th:text="${genre.name}"></b></p>
+                                        </section>
+                                        <footer class="modal-card-foot">
+                                            <button class="button jb-modal-close">Cancel</button>
+                                            <form action="#">
+                                                <button class="button is-danger jb-modal-close" type="submit">Delete</button>
+                                            </form>
+                                        </footer>
+                                    </div>
+                                    <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+                                </div>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="notification">
+                            <div class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <div class="buttons has-addons">
+                                            <th:block th:each="pageNumber: ${pageNumbers}">
+                                                <a th:href="@{/genres(size=${genres.size}, page=${pageNumber})}"
+                                                   style="text-decoration: none">
+                                                    <button type="button" th:class="${pageNumber==genres.number + 1} ? 'button is-active' : 'button'" th:text="${pageNumber}"></button>
+                                                </a>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <small>Page <span th:text="${currentPage}"></span> of <span th:text="${pageNumbers.size()}"></span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF MAIN SECTION -->
+
+    <footer class="footer">
+        <th:block th:replace="fragments/footer.html"></th:block>
+    </footer>
+</div>
+<th:block th:replace="fragments/scripts.html"></th:block>
+</body>
+</html>
