@@ -21,11 +21,12 @@
             <div class="column">
                 <p class="control has-icons-left">
                     <input class="input" type="text" id="searchOmdbInput">
+                    <input hidden th:value="${apikey}" id="inputApikey">
                     <span class="icon is-small is-left"><i class="fa-solid fa-magnifying-glass"></i></span>
                 </p>
             </div>
             <div class="column is-one-fifth is-flex is-align-items-end">
-                <button class="button is-link is-fullwidth" type="button" id="searchOmdbButton">Search</button>
+                <button class="button is-link is-fullwidth" type="button" id="searchOmdbButton" onclick="searchMoviesInOMDB()">Search</button>
             </div>
         </div>
     </div>
@@ -35,6 +36,24 @@
 <script th:src="@{/js/script.js}"></script>
 <script src="/static/js/script.js"></script>
 <script>
-
+    function searchMoviesInOMDB() {
+        const title = document.getElementById('searchOmdbInput').value;
+        const apikey = document.getElementById('inputApikey').value;
+        let response = 'True';
+        let movies = [];
+        let i = 1;
+        while (response === 'True') {
+            fetch('http://omdbapi.com/?apikey='+apikey+'&s='+title+'&page='+i)
+                .then(response => response.json())
+                .then(data =>  {
+                    for (let j = 0; j < data.Search.length; j++) {
+                        movies.push(data.Search[j])
+                    }
+                    i += 1;
+                    response = data.Response;
+                });
+        }
+        console.log(movies);
+    }
 </script>
 </html>

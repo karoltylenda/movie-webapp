@@ -3,7 +3,11 @@ package com.ktdev.movie_webapp.service;
 import com.ktdev.movie_webapp.domain.Genre;
 import com.ktdev.movie_webapp.model.GenreDTO;
 import com.ktdev.movie_webapp.repos.GenreRepository;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class GenreService {
 
     private final GenreRepository genreRepository;
+    private static final Logger LOGGER = Logger.getLogger(GenreService.class.getName());
 
     public GenreService(final GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
@@ -53,6 +58,14 @@ public class GenreService {
         return genreRepository.getByName(name)
                 .map(genre -> mapToDTO(genre, new GenreDTO()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    public Map<String, String> idGenreMap(){
+        Map<String, String> map = new HashMap<>();
+        for (GenreDTO genre: findAll()) {
+            map.put(genre.getId().toString(), genre.getName());
+        }
+        return map;
     }
 
     private GenreDTO mapToDTO(final Genre genre, final GenreDTO genreDTO) {

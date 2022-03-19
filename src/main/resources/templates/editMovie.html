@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
+<head>
+    <th:block th:replace="fragments/header.html"></th:block>
+</head>
+<body>
+<div>
+    <nav id="navbar-main" class="navbar is-fixed-top">
+        <div class="navbar-brand">
+            <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+                <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+            </a>
+            <div class="navbar-item has-control">
+                <div class="control"><input placeholder="Search everywhere..." class="input"></div>
+            </div>
+        </div>
+        <div class="navbar-brand is-right">
+            <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+                <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+            </a>
+        </div>
+        <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+                    <a class="navbar-link is-arrowless">
+                        <div class="is-user-avatar">
+                            <img th:src="'https://avatars.dicebear.com/v2/initials/'+${loggedUser.firstName}+'-'+${loggedUser.lastName}+'.svg'" th:alt="${loggedUser.firstName}+' '+${loggedUser.lastName}">
+                        </div>
+                        <div class="is-user-name"><span th:text="${loggedUser.firstName}+' '+${loggedUser.lastName}"></span></div>
+                        <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a th:href="@{/profile}" class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-account"></i></span>
+                            <span>My Profile</span>
+                        </a>
+                        <a class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-settings"></i></span>
+                            <span>Settings</span>
+                        </a>
+                        <hr class="navbar-divider">
+                        <a th:href="@{/logout}" class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-logout"></i></span>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+                <a th:href="@{/logout}" title="Log out" class="navbar-item is-desktop-icon-only">
+                    <span class="icon"><i class="mdi mdi-logout"></i></span>
+                    <span>Log out</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ASIDE MENU -->
+    <th:block th:replace="fragments/aside.html"></th:block>
+    <!-- END OF ASIDE MENU -->
+
+    <!-- BREADCRUMB -->
+    <section class="section is-title-bar">
+        <div class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <ul>
+                        <li>Admin</li>
+                        <li>Movies</li>
+                        <li>Edit</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF BREADCRUMB -->
+
+    <!-- HERO SECTION -->
+    <section class="hero is-hero-bar">
+        <div class="hero-body">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item"><h1 class="title">
+                        <span th:text="${movie.title}"></span>
+                    </h1></div>
+                </div>
+                <div class="level-right" style="display: none;">
+                    <div class="level-item"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF HERO SECTION -->
+
+    <!-- MAIN SECTION -->
+    <section class="section is-main-section">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <div class="card tile is-child">
+
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            <span class="icon"><i class="mdi mdi-movie-open default"></i> </span>
+                            <span th:text="${movie.title}"></span>
+                        </p>
+                    </header>
+                    <form th:action="@{/movies/edit/{id}/update(id=${movie.id})}" method="post">
+                        <div class="card-content">
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Title</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.title}" name="title" required>
+                                                </div>
+                                                <p class="help">Title is required</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">IMDB ID</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.imdbId}" name="imdbId">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">IMDB Votes</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.imdbVotes}" name="imdbVotes">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">IMDB Rating</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.imdbRating}" name="imdbRating">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Country</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.country}" name="country">
+                                                </div>
+                                                <p class="help">Multiply countries separate with coma</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Languages</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.language}" name="language">
+                                                </div>
+                                                <p class="help">Multiply languages separate with coma</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Awards</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.awards}" name="awards">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Box office</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.boxOffice}" name="boxOffice">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Released</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="date" class="input" th:value="${movie.released}" name="released">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Runtime</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.runtime}" name="runtime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Type</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="select is-fullwidth">
+                                                    <select name="type">
+                                                        <option value="series" th:selected="${movie.type == 'series'}">Series</option>
+                                                        <option value="movie" th:selected="${movie.type == 'movie'}">Movie</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Year</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.year}" name="year">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">DVD Release</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="date" class="input" th:value="${movie.dvd}" name="dvd">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Poster</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.poster}" name="poster">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Website</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <input type="text" class="input" th:value="${movie.website}" name="website">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Info</label>
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <textarea type="text" class="textarea" th:text="${movie.plot}" name="plot"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-two-fifths">
+                                    <div class="tile is-child is-flex" style="justify-content: center">
+                                        <img th:src="${movie.poster}">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="columns">
+                                <div class="column">
+                                    <button type="submit" class="button is-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- END OF MAIN SECTION -->
+
+
+    <footer class="footer">
+        <th:block th:replace="fragments/footer.html"></th:block>
+    </footer>
+</div>
+<th:block th:replace="fragments/scripts.html"></th:block>
+</body>
+</html>

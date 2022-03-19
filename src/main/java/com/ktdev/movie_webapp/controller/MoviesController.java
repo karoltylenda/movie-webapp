@@ -70,6 +70,22 @@ public class MoviesController {
         return new RedirectView("/movies");
     }
 
+    @GetMapping("/edit/{id}")
+    public String editMovie(@PathVariable Long id, Model model, Principal principal){
+        UserDTO loggedUser = userService.getByUsername(principal.getName());
+        MovieDTO movieDTO = movieService.get(id);
+        model.addAttribute("loggedUser", loggedUser);
+        model.addAttribute("movie", movieDTO);
+        model.addAttribute("genres", genreService.findAll());
+        return "editMovie";
+    }
+
+    @PostMapping("/edit/{id}/update")
+    public RedirectView updateMovie(@PathVariable Long id, MovieDTO movieDTO){
+        LOGGER.info(movieDTO.toString());
+        return new RedirectView("/movies/edit/"+id);
+    }
+
     @PostMapping("/addMovie")
     public RedirectView addMovie(MovieDTO movieDTO, String genres){
         String[] strings = genres.split(",");
@@ -95,11 +111,6 @@ public class MoviesController {
         UserDTO userDTO = userService.getByUsername(username);
         model.addAttribute("apikey", userDTO.getOmdbApiKey());
         return "searchMovie";
-    }
-
-    @GetMapping("/addNewMovie")
-    public String addNewMovie(){
-        return "addNewMovie";
     }
 
     @GetMapping("/old")
