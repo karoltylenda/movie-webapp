@@ -92,6 +92,19 @@
     <!-- END OF HERO SECTION -->
 
     <!-- MAIN SECTION -->
+    <section class="section" th:if="${error}">
+        <div class="notification is-danger is-light">
+            <button class="delete"></button>
+            <th:block th:text="${error}"></th:block>
+        </div>
+    </section>
+    <section class="section" th:if="${success}">
+        <div class="notification is-success is-light">
+            <button class="delete"></button>
+            <th:block th:text="${success}"></th:block>
+        </div>
+    </section>
+
     <section class="section is-main-section">
         <div class="card has-table">
             <header class="card-header">
@@ -140,7 +153,7 @@
                                         </section>
                                         <footer class="modal-card-foot">
                                             <button class="button jb-modal-close">Cancel</button>
-                                            <form action="#">
+                                            <form th:action="@{/genres/delete/}">
                                                 <button class="button is-danger jb-modal-close" type="submit">Delete</button>
                                             </form>
                                         </footer>
@@ -175,6 +188,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <span class="icon"><i class="mdi mdi-plus"></i></span>
+                    Add genre
+                </p>
+            </header>
+            <div class="card-content">
+                <form th:action="@{/genres/addGenre}" method="get">
+                    <div class="columns">
+                        <div class="column is-four-fifths">
+                            <input class="input" name="name" placeholder="Genre name">
+                        </div>
+                        <div class="column">
+                            <button class="button is-primary is-fullwidth" type="submit">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </section>
     <!-- END OF MAIN SECTION -->
 
@@ -183,5 +217,16 @@
     </footer>
 </div>
 <th:block th:replace="fragments/scripts.html"></th:block>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+            const $notification = $delete.parentNode;
+
+            $delete.addEventListener('click', () => {
+                $notification.parentNode.removeChild($notification);
+            });
+        });
+    });
+</script>
 </body>
 </html>

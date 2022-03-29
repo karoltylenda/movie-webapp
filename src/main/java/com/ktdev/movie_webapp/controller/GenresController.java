@@ -10,8 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.List;
@@ -53,5 +56,22 @@ public class GenresController {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("loggedUser", userService.getByUsername(principal.getName()));
         return "genres";
+    }
+
+    @GetMapping("/delete/{id}")
+    public RedirectView delete(@PathVariable Long id){
+        genreService.delete(id);
+        return new RedirectView("/genres");
+    }
+
+    @GetMapping("/addGenre")
+    public RedirectView add(GenreDTO genreDTO, RedirectAttributes redirectAttributes){
+        try {
+            genreService.create(genreDTO);
+            redirectAttributes.addFlashAttribute("succcess", "Database updated.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Something went wrong.");
+        }
+        return new RedirectView("/genres");
     }
 }
