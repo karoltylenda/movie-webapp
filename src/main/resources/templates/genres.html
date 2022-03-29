@@ -130,11 +130,9 @@
                                 <td><strong th:text="${genre.name}"></strong></td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-right">
-                                        <a href="#">
-                                            <button class="button is-small is-primary" type="button">
-                                                <span class="icon"><i class="mdi mdi-eye"></i></span>
-                                            </button>
-                                        </a>
+                                        <button class="button is-small is-primary jb-modal" th:data-target="'edit-modal-'+${genre.id}" type="button">
+                                            <span class="icon"><i class="mdi mdi-eye"></i></span>
+                                        </button>
                                         <button class="button is-small is-danger jb-modal" th:data-target="'delete-modal-'+${genre.id}" type="button">
                                             <span class="icon"><i class="mdi mdi-trash-can"></i></span>
                                         </button>
@@ -153,13 +151,46 @@
                                         </section>
                                         <footer class="modal-card-foot">
                                             <button class="button jb-modal-close">Cancel</button>
-                                            <form th:action="@{/genres/delete/}">
+                                            <form th:action="@{/genres/delete/{id}(id=${genre.id})}">
                                                 <button class="button is-danger jb-modal-close" type="submit">Delete</button>
                                             </form>
                                         </footer>
                                     </div>
                                     <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
                                 </div>
+
+                                <div th:id="'edit-modal-'+${genre.id}" class="modal">
+                                    <div class="modal-background jb-modal-close"></div>
+                                    <div class="modal-card">
+                                        <header class="modal-card-head">
+                                            <p class="modal-card-title">Edit</p>
+                                            <button class="delete jb-modal-close" aria-label="close"></button>
+                                        </header>
+                                        <form th:action="@{/genres/edit/{id}/update(id=${genre.id})}" method="post">
+                                            <section class="modal-card-body">
+                                                <div class="field is-horizontal">
+                                                    <div class="field-label is-normal">
+                                                        <label class="label">Title</label>
+                                                    </div>
+                                                    <div class="field-body">
+                                                        <div class="field">
+                                                            <div class="control">
+                                                                <input type="text" class="input" th:value="${genre.name}" name="name" required>
+                                                            </div>
+                                                            <p class="help">Name is required</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <footer class="modal-card-foot">
+                                                <button class="button jb-modal-close">Cancel</button>
+                                                    <button class="button is-primary jb-modal-close" type="submit">Submit</button>
+                                            </footer>
+                                        </form>
+                                    </div>
+                                    <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
+                                </div>
+
                             </tr>
                             </tbody>
                         </table>
