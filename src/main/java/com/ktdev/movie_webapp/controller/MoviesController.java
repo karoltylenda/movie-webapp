@@ -82,7 +82,7 @@ public class MoviesController {
 
     @PostMapping("/edit/{id}/update")
     public RedirectView updateMovie(@PathVariable Long id, MovieDTO movieDTO){
-        LOGGER.info(movieDTO.toString()); //TODO update movie method :)
+        movieService.update(id, movieDTO);
         return new RedirectView("/movies/edit/"+id);
     }
 

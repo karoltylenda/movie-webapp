@@ -35,11 +35,13 @@ public class GenresController {
     public String genres(
             @RequestParam("size") Optional<Integer> size,
             @RequestParam("page") Optional<Integer> page,
+            @RequestParam("name") Optional<String> name,
             Model model, Principal principal){
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        Page<GenreDTO> genresPage = genreService.findPaginated(PageRequest.of(currentPage -1, pageSize));
+
+        Page<GenreDTO> genresPage = genreService.findPaginated(PageRequest.of(currentPage -1, pageSize), genreService.getListOfGenres(name));
 
         int totalPages = genresPage.getTotalPages();
         if (totalPages > 0) {

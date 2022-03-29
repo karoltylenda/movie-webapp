@@ -4,10 +4,7 @@ import com.ktdev.movie_webapp.domain.Genre;
 import com.ktdev.movie_webapp.model.GenreDTO;
 import com.ktdev.movie_webapp.repos.GenreRepository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -37,20 +34,27 @@ public class GenreService {
                 .collect(Collectors.toList());
     }
 
-    public Page<GenreDTO> findPaginated(Pageable pageable){
+    public List<GenreDTO> findAllByName(String name){
+        return genreRepository.getAllByNameContaining(name)
+                .stream()
+                .map(genre -> mapToDTO(genre, new GenreDTO()))
+                .collect(Collectors.toList());
+    }
+
+    public Page<GenreDTO> findPaginated(Pageable pageable, List<GenreDTO> genreDTOList){
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         List<GenreDTO> list;
 
-        if (findAll().size() < startItem) {
+        if (genreDTOList.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, findAll().size());
-            list = findAll().subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, genreDTOList.size());
+            list = genreDTOList.subList(startItem, toIndex);
         }
 
-        Page<GenreDTO> genreDTOPage = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), findAll().size());
+        Page<GenreDTO> genreDTOPage = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), genreDTOList.size());
 
         return genreDTOPage;
     }
@@ -103,4 +107,11 @@ public class GenreService {
         return genre;
     }
 
+    public List<GenreDTO> getListOfGenres(Optional<String> name) {
+        if (name.isEmpty()){
+            return findAll();
+        } else {
+            return findAllByName(name.get());
+        }
+    }
 }

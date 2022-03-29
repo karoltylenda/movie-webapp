@@ -106,6 +106,31 @@
     </section>
 
     <section class="section is-main-section">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <span class="icon"><i class="mdi mdi-magnify"></i></span>
+                    Search
+                </p>
+            </header>
+            <div class="card-content">
+                <form th:action="@{/genres}" method="get">
+                    <div class="columns">
+                        <div class="column is-four-fifths">
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input" type="name" name="name" placeholder="Search genres by name...">
+                                <span class="icon is-left">
+                                    <i class="mdi mdi-magnify"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <button class="button is-primary is-fullwidth" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="card has-table">
             <header class="card-header">
                 <p class="card-header-title">
