@@ -97,7 +97,7 @@
         <div class="card has-table">
             <header class="card-header">
                 <p class="card-header-title">
-                    <span class="icon"><i class="mdi mdi-account-multiple"></i></span>
+                    <span class="icon"><i class="mdi mdi-movie"></i></span>
                     Movies
                 </p>
             </header>
@@ -133,7 +133,7 @@
                                     <td><small th:text="${movie.runtime}"></small></td>
                                     <td><small th:text="${movie.released}"></small></td>
                                     <td><small th:text="${movie.country}"></small></td>
-                                    <td><small th:text="${movie.imdbId}"></small></td>
+                                    <td><a th:href="'https://www.imdb.com/title/'+${movie.imdbId}" target="_blank"><small th:text="${movie.imdbId}"></small></a></td>
                                     <td class="is-actions-cell">
                                         <div class="buttons is-right">
                                             <a th:href="@{/movies/edit/{id}(id = ${movie.id})}">

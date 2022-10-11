@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header.html"></th:block>
+</head>
+<body>
+<section class="section">
+    <th:block th:replace="fragments/navbar.html"></th:block>
+</section>
+
+<section class="section">
+    <div class="container">
+        <table class="table is-striped is-fullwidth card" id="moviesTable" style="white-space: nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Release date</th>
+                    <th>Type</th>
+                    <th>Country</th>
+                    <th>IMDB ID</th>
+                    <th>Runtime</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="movie:${movies}">
+                    <td th:text="${movie.getId()}"></td>
+                    <td th:text="${movie.getTitle()}"></td>
+                    <td th:text="${movie.getReleased()}"></td>
+                    <td th:text="${movie.getType()}"></td>
+                    <td th:text="${movie.getCountry()}"></td>
+                    <td th:text="${movie.getImdbId()}"></td>
+                    <td th:text="${movie.getRuntime()}"></td>
+                    <td class="is-flex is-justify-content-space-around">
+                        <a href="#" class="has-text-primary"><div><i class="fa-solid fa-pen-to-square"></i></div></a>
+                        <a class="has-text-danger js-modal-trigger" data-target=""><div><i class="fa-solid fa-trash-can"></i></div></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Search title" id="title">
+                <input type="text" name="apikey" value="c4eaee83" hidden id="apikey">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <div class="select is-fullwidth">
+                    <select id="plot">
+                        <option value="full" selected>Full</option>
+                        <option value="short">Short</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link" type="button" onclick="searchMovie()">Search</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+<script>
+    function searchMovie(){
+        const apikey = document.getElementById('apikey');
+        const title = document.getElementById('title');
+        const plot = document.getElementById('plot');
+
+        fetch('http://omdbapi.com/?apikey='+apikey.value+'&t='+title.value+'&plot='+plot.value)
+            .then(response => response.json())
+            .then(data => setMovie(data));
+
+    }
+
+    function setMovie(data){
+        const title = data.Title;
+        const year = data.Year;
+        const released = dateParser(data.Released);
+        const runtime = data.Runtime;
+        const plot = data.Plot;
+        const language = data.Language;
+        const country = data.Country;
+        const awards = data.Awards;
+        const poster = data.Poster;
+        const imdbRating = data.imdbRating;
+        const imdbVotes = data.imdbVotes;
+        const imdbId = data.imdbID;
+        const type = data.Type;
+        const dvd = dateParser(data.DVD);
+        const boxOffice = data.BoxOffice;
+        const website = data.website;
+
+        const movie = {
+            title, year, released, runtime, plot, language, country, awards, poster, imdbRating, imdbVotes, imdbId, type, dvd, boxOffice, website
+        }
+
+        console.log(movie);
+
+        postData('http://localhost:8080/api/movies', movie).
+            then(data => {
+                console.log(data)
+        })
+
+    }
+
+    async function postData(url='', data={}){
+        console.log(data);
+        console.log(JSON.stringify(data))
+        const response = await fetch(url, {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(data)
+        });
+        return response.json();
+    }
+
+    function setMovieField(data = ''){
+        if (data === undefined){
+            return null;
+        } else if (data === 'undefined--N/A'){
+            return null;
+        } else return data;
+    }
+</script>
+
+<script th:src="@{/js/script.js}"></script>
+<script src="/static/js/script.js"></script>
+</html>

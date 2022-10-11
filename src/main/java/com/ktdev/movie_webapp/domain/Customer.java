@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
-@Entity
+@Entity(name = "")
 public class Customer {
 
     @Id

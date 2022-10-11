@@ -1,16 +1,20 @@
 package com.ktdev.movie_webapp.controller;
 
+import com.google.gson.Gson;
 import com.ktdev.movie_webapp.model.GenreDTO;
 import com.ktdev.movie_webapp.model.MovieDTO;
 import com.ktdev.movie_webapp.model.UserDTO;
 import com.ktdev.movie_webapp.service.GenreService;
 import com.ktdev.movie_webapp.service.MovieService;
+import com.ktdev.movie_webapp.service.OmdbService;
 import com.ktdev.movie_webapp.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -29,13 +33,15 @@ public class MoviesController {
     private final MovieService movieService;
     private final GenreService genreService;
     private final UserService userService;
+    private final OmdbService omdbService;
 
     private final Logger LOGGER = Logger.getLogger(MoviesController.class.getName());
 
-    public MoviesController(MovieService movieService, GenreService genreService, UserService userService) {
+    public MoviesController(MovieService movieService, GenreService genreService, UserService userService, OmdbService omdbService) {
         this.movieService = movieService;
         this.genreService = genreService;
         this.userService = userService;
+        this.omdbService = omdbService;
     }
 
     @GetMapping
@@ -105,17 +111,19 @@ public class MoviesController {
         return new RedirectView("/movies");
     }
 
-    @GetMapping("/searchInOmdb")
+    @GetMapping("/omdb")
     public String searchInOmdb(Model model, Principal principal){
-        String username = principal.getName();
-        UserDTO userDTO = userService.getByUsername(username);
-        model.addAttribute("apikey", userDTO.getOmdbApiKey());
-        return "searchMovie";
+        UserDTO loggedUser = userService.getByUsername(principal.getName());
+        model.addAttribute("loggedUser", loggedUser);
+
+        return "omdbSearch";
     }
 
-    @GetMapping("/old")
-    public String oldMovies(){
-        return "moviesOld";
+    @GetMapping("/omdb/search")
+    public String getFromOmdb(@RequestParam String title, Model model, Principal principal){
+        UserDTO userDTO = userService.getByUsername(principal.getName());
+        model.addAttribute("movies", omdbService.getMoviesFromOmdb(title, userDTO.getOmdbApiKey()));
+        return "omdbSearchMovies";
     }
 
 }

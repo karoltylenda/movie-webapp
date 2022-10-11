@@ -3,7 +3,6 @@ package com.ktdev.movie_webapp.service;
 import com.ktdev.movie_webapp.domain.Genre;
 import com.ktdev.movie_webapp.model.GenreDTO;
 import com.ktdev.movie_webapp.repos.GenreRepository;
-
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class GenreService {
     }
 
     public List<GenreDTO> findAllByName(String name){
-        return genreRepository.getAllByNameContaining(name)
+        return genreRepository.findByNameContaining(name)
                 .stream()
                 .map(genre -> mapToDTO(genre, new GenreDTO()))
                 .collect(Collectors.toList());
@@ -71,7 +70,7 @@ public class GenreService {
         return genreRepository.save(genre).getId();
     }
 
-    public void update(final Long id, final GenreDTO genreDTO) {
+    public void update(final Long id, final GenreDTO genreDTO){
         final Genre genre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         mapToEntity(genreDTO, genre);

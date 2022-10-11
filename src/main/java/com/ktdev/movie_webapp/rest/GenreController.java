@@ -1,8 +1,12 @@
 package com.ktdev.movie_webapp.rest;
 
+import com.ktdev.movie_webapp.controller.GenresController;
 import com.ktdev.movie_webapp.model.GenreDTO;
 import com.ktdev.movie_webapp.service.GenreService;
+
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenreController {
 
     private final GenreService genreService;
+    private static final Logger LOGGER = Logger.getLogger(GenresController.class.getName());
 
     public GenreController(final GenreService genreService) {
         this.genreService = genreService;

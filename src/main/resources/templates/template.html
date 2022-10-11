@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
+<head>
+    <th:block th:replace="fragments/header.html"></th:block>
+</head>
+<body>
+<div>
+    <nav id="navbar-main" class="navbar is-fixed-top">
+        <div class="navbar-brand">
+            <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+                <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+            </a>
+            <div class="navbar-item has-control">
+                <div class="control"><input placeholder="Search everywhere..." class="input"></div>
+            </div>
+        </div>
+        <div class="navbar-brand is-right">
+            <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+                <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+            </a>
+        </div>
+        <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+                    <a class="navbar-link is-arrowless">
+                        <div class="is-user-avatar">
+                            <img th:src="'https://avatars.dicebear.com/v2/initials/'+${loggedUser.firstName}+'-'+${loggedUser.lastName}+'.svg'" th:alt="${loggedUser.firstName}+' '+${loggedUser.lastName}">
+                        </div>
+                        <div class="is-user-name"><span th:text="${loggedUser.firstName}+' '+${loggedUser.lastName}"></span></div>
+                        <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a th:href="@{/profile}" class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-account"></i></span>
+                            <span>My Profile</span>
+                        </a>
+                        <a class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-settings"></i></span>
+                            <span>Settings</span>
+                        </a>
+                        <hr class="navbar-divider">
+                        <a th:href="@{/logout}" class="navbar-item">
+                            <span class="icon"><i class="mdi mdi-logout"></i></span>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+                <a th:href="@{/logout}" title="Log out" class="navbar-item is-desktop-icon-only">
+                    <span class="icon"><i class="mdi mdi-logout"></i></span>
+                    <span>Log out</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ASIDE MENU -->
+    <th:block th:replace="fragments/aside.html"></th:block>
+    <!-- END OF ASIDE MENU -->
+
+    <!-- BREADCRUMB -->
+    <section class="section is-title-bar">
+        <div class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <ul>
+                        <li>Admin</li>
+                        <li>Dashboard</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF BREADCRUMB -->
+
+    <!-- HERO SECTION -->
+    <section class="hero is-hero-bar">
+        <div class="hero-body">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item"><h1 class="title">
+                        Dashboard
+                    </h1></div>
+                </div>
+                <div class="level-right" style="display: none;">
+                    <div class="level-item"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END OF HERO SECTION -->
+
+    <!-- MAIN SECTION -->
+    <section class="section is-main-section">
+        <div>
+            <h2>MAIN SECTION</h2>
+            <div>
+                <code>Here is a sample</code>
+            </div>
+        </div>
+    </section>
+    <!-- END OF MAIN SECTION -->
+
+
+    <footer class="footer">
+        <th:block th:replace="fragments/footer.html"></th:block>
+    </footer>
+</div>
+<th:block th:replace="fragments/scripts.html"></th:block>
+</body>
+</html>

@@ -14,8 +14,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,6 +28,7 @@ public class GenresController {
 
     private final UserService userService;
     private final GenreService genreService;
+    private static final Logger LOGGER = Logger.getLogger(GenresController.class.getName());
 
     public GenresController(UserService userService, GenreService genreService) {
         this.userService = userService;
@@ -42,15 +46,16 @@ public class GenresController {
         int pageSize = size.orElse(10);
 
         Page<GenreDTO> genresPage = genreService.findPaginated(PageRequest.of(currentPage -1, pageSize), genreService.getListOfGenres(name));
+        List<Integer> pageNumbers = Collections.emptyList();
 
         int totalPages = genresPage.getTotalPages();
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+            pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
                     .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
         }
 
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("genres", genresPage);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("loggedUser", userService.getByUsername(principal.getName()));
@@ -75,8 +80,14 @@ public class GenresController {
     }
 
     @PostMapping("/edit/{id}/update")
-    public RedirectView update(@PathVariable Long id, GenreDTO genreDTO){
-        genreService.update(id, genreDTO);
+    public RedirectView update(@PathVariable Long id, GenreDTO genreDTO, RedirectAttributes redirectAttributes) {
+        try {
+            genreService.update(id, genreDTO);
+            redirectAttributes.addFlashAttribute("succcess", "Database updated.");
+        } catch (Exception e) {
+            LOGGER.warning(e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Something went wrong.");
+        }
         return new RedirectView("/genres");
     }
 }

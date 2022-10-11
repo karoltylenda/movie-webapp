@@ -175,10 +175,12 @@
                                             <p>This will permanently delete <b th:text="${genre.name}"></b></p>
                                         </section>
                                         <footer class="modal-card-foot">
-                                            <button class="button jb-modal-close">Cancel</button>
-                                            <form th:action="@{/genres/delete/{id}(id=${genre.id})}">
-                                                <button class="button is-danger jb-modal-close" type="submit">Delete</button>
-                                            </form>
+                                            <div style="display: flex; width: 100%; align-content: end; justify-content: end; align-items: end">
+                                                <button class="button jb-modal-close">Cancel</button>
+                                                <form th:action="@{/genres/delete/{id}(id=${genre.id})}">
+                                                    <button class="button is-danger jb-modal-close" type="submit">Delete</button>
+                                                </form>
+                                            </div>
                                         </footer>
                                     </div>
                                     <button class="modal-close is-large jb-modal-close" aria-label="close"></button>
@@ -208,8 +210,10 @@
                                                 </div>
                                             </section>
                                             <footer class="modal-card-foot">
-                                                <button class="button jb-modal-close">Cancel</button>
+                                                <div style="display: flex; width: 100%; align-content: end; justify-content: end; align-items: end">
+                                                    <button class="button jb-modal-close">Cancel</button>
                                                     <button class="button is-primary jb-modal-close" type="submit">Submit</button>
+                                                </div>
                                             </footer>
                                         </form>
                                     </div>
